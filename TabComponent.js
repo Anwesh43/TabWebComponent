@@ -6,7 +6,7 @@ class TabComponent extends HTMLElement {
         this.div = document.createElement('div')
         shadow.appendChild(this.div)
         const children = this.children
-        this.tabs = children.map((child)=>{
+        this.tabObjs = children.map((child)=>{
             return {title:child.getAttribute('title'),text:child.innerHTML}
         })
         this.currIndex = 0
@@ -16,7 +16,17 @@ class TabComponent extends HTMLElement {
         canvas.width = this.tabs.length * (w/10)
         canvas.height = h/30
         const context = canvas.getContext('2d')
+        if(!this.tabs) {
+            this.tabs = this.tabObjs.map((tabObj,index) => {
+                return new Tab(text,index*(w/10),w/10)
+            })
+            if(this.tabs.length > 0) {
+            }
+        }
         context.font = context.font.replace(/\d{2}/,h/30)
+        this.tabs.forEach((tab)=>{
+            tab.draw(context)
+        })
         this.div.style.backgroundImage = `url(${canvas.toDataURL()})`
     }
     connectedCallback() {
