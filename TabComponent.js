@@ -5,8 +5,10 @@ class TabComponent extends HTMLElement {
         const shadow = this.attachShadow({mode:'open'})
         this.div = document.createElement('div')
         shadow.appendChild(this.div)
+        this.contentDiv = document.createElement('div')
         this.createTabObjs()
         this.currIndex = 0
+        shadow.appendChild(this.contentDiv)
     }
     createTabObjs() {
       this.tabObjs = []
@@ -29,6 +31,7 @@ class TabComponent extends HTMLElement {
             })
             if(this.tabs.length > 0 && this.animationHandler) {
                 this.animationHandler.startAnimation(this.tabs[0])
+                this.contentDiv.innerHTML = this.tabObjs[0].text
             }
         }
         context.font = context.font.replace(/\d{2}/,h/30)
@@ -41,9 +44,12 @@ class TabComponent extends HTMLElement {
         if(this.tabObjs && this.tabObjs.length > 0) {
             this.animationHandler = new AnimationHandler(this)
             this.render()
+            this.contentDiv.style.width = this.div.style.width
+            this.contentDiv.style.height = h/2
             this.div.onmousedown = (event) => {
                 for(var i=0;i<this.tabs.length;i++) {
                     const tab = this.tabs[i]
+                    this.contentDiv.innerHTML = this.tabObjs[i].text
                     if(tab.handleTap(event.offsetX) == true) {
                         this.animationHandler.startAnimation(tab)
                         break
@@ -62,8 +68,7 @@ class Tab {
         this.dir = 0
     }
     draw(context) {
-        console.log(this.text)
-        context.fillStyle = 'gray'
+        context.fillStyle = '#E0E0E0'
         context.fillRect(this.x,0,this.w,h/10)
         context.fillStyle = 'black'
         const tw = context.measureText(this.text).width
@@ -131,7 +136,7 @@ class AnimationHandler  {
                       clearInterval(interval)
                   }
               }
-          },100)
+          },20)
         }
     }
 }
