@@ -1,22 +1,30 @@
 <body>
-    <tabs>
+    <tabs-comp>
         <tab title="tab1">
+            Before we study basic building blocks of the C# programming language, let us look at a bare minimum C# program structure so that we can take it as a reference in upcoming chapters.
         </tab>
         <tab title="tab2">
+            The first line of the program using System; - the using keyword is used to include the System namespace in the program. A program generally has multiple using statements.
         </tab>
         <tab title="tab3">
+            The next line has the namespace declaration. A namespace is a collection of classes. The HelloWorldApplication namespace contains the class HelloWorld.
         </tab>
         <tab title="tab4">
+            The next line has a class declaration, the class HelloWorld contains the data and method definitions that your program uses. Classes generally contain multiple methods. Methods define the behavior of the class. However, the HelloWorld class has only one method Main.
         </tab>
         <tab title="tab5">
+            The next line defines the Main method, which is the entry point for all C# programs. The Main method states what the class does when executed.
         </tab>
         <tab title="tab6">
+            The next line /*...*/ is ignored by the compiler and it is put to add comments in the program.
         </tab>
         <tab title="tab7">
+            The Main method specifies its behavior with the statement Console.WriteLine("Hello World");
         </tab>
         <tab title="tab8">
-        </tab>    
-    </tabs>
+            The last line Console.ReadKey(); is for the VS.NET Users. This makes the program wait for a key press and it prevents the screen from running and closing quickly when the program is launched from Visual Studio .NET.
+        </tab>
+    </tabs-comp>
     <script src="TabComponent.js">
     </script>
 </body>
