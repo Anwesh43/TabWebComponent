@@ -20,7 +20,8 @@ class TabComponent extends HTMLElement {
             this.tabs = this.tabObjs.map((tabObj,index) => {
                 return new Tab(text,index*(w/10),w/10)
             })
-            if(this.tabs.length > 0) {
+            if(this.tabs.length > 0 && this.animationHandler) {
+                this.animationHandler.startAnimation(this.tabs[0])
             }
         }
         context.font = context.font.replace(/\d{2}/,h/30)
@@ -31,7 +32,17 @@ class TabComponent extends HTMLElement {
     }
     connectedCallback() {
         if(this.tabs.length > 0) {
+            this.animationHandler = new AnimationHandler()
             this.render()
+            this.div.onmousedown = (event) => {
+                for(var i=0;i<tabs.length;i++) {
+                    const tab = this.tabs[i]
+                    if(tab.handleTap(event.offsetX) == true) {
+                        this.animationHandler.startAnimation(tab)
+                        break
+                    }
+                }
+            }
         }
     }
 }
@@ -72,14 +83,22 @@ class Tab {
     startUpdating(dir) {
         this.dir = dir
     }
+    handleTap(x) {
+        const condition =  x>=this.x && x<=this.x+this.w
+        return condition
+    }
 }
 class AnimationHandler  {
     startAnimation(currTab) {
+        if(currTab == this.currTab) {
+            return 0
+        }
         if(this.currTab) {
             this.prevTab = this.currTab
             this.prevTab.startUpdating(-1)
         }
         this.currTab = currTab
+        this.currTab.startUpdating(1)
         const interval = setInterval(()=>{
             if(this.currTab) {
                 this.currTab.update()
