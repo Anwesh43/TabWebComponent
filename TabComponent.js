@@ -73,3 +73,23 @@ class Tab {
         this.dir = dir
     }
 }
+class AnimationHandler  {
+    startAnimation(currTab) {
+        if(this.currTab) {
+            this.prevTab = this.currTab
+            this.prevTab.startUpdating(-1)
+        }
+        this.currTab = currTab
+        const interval = setInterval(()=>{
+            if(this.currTab) {
+                this.currTab.update()
+                if(this.prevTab) {
+                    this.prevTab.update()
+                }
+                if(this.currTab.stopped() == true)  {
+                    clearInterval(interval)
+                }
+            }
+        },100)
+    }
+}
