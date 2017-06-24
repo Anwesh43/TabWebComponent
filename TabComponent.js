@@ -112,3 +112,4 @@ class AnimationHandler  {
         },100)
     }
 }
+customElements.define('tabs',TabComponent)
